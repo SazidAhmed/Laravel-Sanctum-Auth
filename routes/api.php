@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\User;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NewPasswordController;
+use App\Http\Controllers\EmailVerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +21,12 @@ use Illuminate\Support\Facades\Route;
 
 // Route::resource('products', ProductController::class);
 
+
+Route::middleware('auth:sanctum','verified')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -30,15 +38,13 @@ Route::post('/reset-password', [NewPasswordController::class, 'reset']);
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/products/{id}', [ProductController::class, 'show']);
-    Route::post('/products', [ProductController::class, 'store']);
-    Route::put('/products/{id}', [ProductController::class, 'update']);
-    Route::delete('/products/{id}', [ProductController::class, 'destroy']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::post('/products', [ProductController::class, 'store']);
+Route::put('/products/{id}', [ProductController::class, 'update']);
+Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+Route::post('/logout', [AuthController::class, 'logout']);
+
+Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail']);
+Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
 });
 
-
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});

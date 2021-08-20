@@ -67,4 +67,8 @@ class NewPasswordController extends Controller
 
     }
 
+    public function changePassword(Request $request){
+
+    }
+
 }
