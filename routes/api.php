@@ -1,12 +1,17 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+//Models
 use App\Models\User;
+
+//Controllers
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NewPasswordController;
 use App\Http\Controllers\EmailVerificationController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChangePasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,5 +51,8 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail']);
 Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
+
+Route::post('/change-password', [ChangePasswordController::class,'store'])->name('change.password');
+
 });
 
