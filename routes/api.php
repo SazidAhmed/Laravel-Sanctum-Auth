@@ -13,6 +13,8 @@ use App\Http\Controllers\NewPasswordController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\ChangePasswordController;
 
+use App\Http\Controllers\RoleController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -53,6 +55,12 @@ Route::post('email/verification-notification', [EmailVerificationController::cla
 Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
 
 Route::post('/change-password', [ChangePasswordController::class,'store'])->name('change.password');
+
+
+Route::get('/roles', [RoleController::class, 'index']);
+Route::post('/roles', [RoleController::class, 'store']);
+Route::put('/roles/{id}', [RoleController::class, 'update']);
+Route::delete('/roles/{id}', [RoleController::class, 'destroy']);
 
 });
 
